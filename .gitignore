@@ -1,0 +1,28 @@
+# Virtual environment
+.venv/
+
+# Editor
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# External repos
+RouteLLM/
+
+# Large data files
+*.parquet
+gpt4_llama7b_data_unbalanced/
+router/data/
+
+# Embedding caches
+.embedding_cache/
+
+# Model checkpoints
+router/checkpoints_*/
+*.pt
+
+# OS files
+Thumbs.db
+.DS_Store
