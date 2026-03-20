@@ -13,6 +13,10 @@ RouteLLM/
 
 # Large data files
 *.parquet
+*.zip
+*.csv
+*.bin
+*.safetensors
 gpt4_llama7b_data_unbalanced/
 router/data/
 

@@ -2,7 +2,6 @@
 Unified training script for Matrix Factorization Router.
 Works with any dataset in the standard router format.
 """
-
 import os
 import sys
 import torch
@@ -267,6 +266,10 @@ def main():
                         help='Dimension of model embeddings')
     parser.add_argument('--embedding_model', type=str, default='all-MiniLM-L6-v2',
                         help='Sentence transformer model name')
+    parser.add_argument('--train_embeddings', type=str, default=None,
+                        help='Path to precomputed train embeddings (.pt file)')
+    parser.add_argument('--val_embeddings', type=str, default=None,
+                        help='Path to precomputed val embeddings (.pt file)')
     
     # Training arguments
     parser.add_argument('--batch_size', type=int, default=64,
@@ -329,15 +332,17 @@ def main():
         batch_size=args.batch_size,
         val_split=args.val_split,
         seed=args.seed,
+        train_embeddings_path=args.train_embeddings,
+        val_embeddings_path=args.val_embeddings,
     )
     
     print(f"Train samples: {len(train_loader.dataset)}")
     print(f"Val samples: {len(val_loader.dataset)}")
     
-    # Initialize model
-    print("\nInitializing model...")
+    # Initialize model (use auto-detected query_dim from the embedding model)
+    print(f"\nInitializing model (detected embedding dim: {query_dim})...")
     model = MatrixFactorizationRouter(
-        query_embedding_dim=args.query_embedding_dim,
+        query_embedding_dim=query_dim,
         model_embedding_dim=args.model_embedding_dim,
     )
     model = model.to(device)

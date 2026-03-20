@@ -10,6 +10,40 @@ from typing import Optional, Tuple
 import numpy as np
 import os
 import hashlib
+from huggingface_hub import hf_hub_download
+
+def get_hf_path(local_path: str, repo_id: str = "MSourav/capstone-datasets") -> str:
+    """Check if file exists locally, otherwise try to download from Hugging Face."""
+    if not local_path:
+        return local_path
+        
+    if os.path.exists(local_path):
+        return local_path
+        
+    print(f"File {local_path} not found locally. Attempting to download from Hugging Face ({repo_id})...")
+    
+    # Standardize path
+    hf_path = local_path.replace("\\", "/")
+    
+    # Extract relative paths usually mapped in the HF repo
+    if "gpt4_llama7b_data_unbalanced" in hf_path:
+        hf_path = "gpt4_llama7b_data_unbalanced" + hf_path.split("gpt4_llama7b_data_unbalanced")[1]
+    elif "router/data" in hf_path:
+        hf_path = "router/data" + hf_path.split("router/data")[1]
+    else:
+        # Fallback to cleaning leading prefixes
+        if hf_path.startswith("./"):
+            hf_path = hf_path[2:]
+        elif hf_path.startswith("../"):
+            hf_path = hf_path.replace("../", "")
+            
+    try:
+        downloaded_path = hf_hub_download(repo_id=repo_id, filename=hf_path, repo_type="dataset")
+        print(f"Successfully downloaded to {downloaded_path}")
+        return downloaded_path
+    except Exception as e:
+        print(f"Warning: Failed to download {hf_path} from HF: {e}")
+        return local_path
 
 
 class RouterDataset(Dataset):
@@ -27,6 +61,7 @@ class RouterDataset(Dataset):
         embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
         cache_embeddings: bool = True,
         include_ties_as: str = "weak",  # "weak", "strong", or "exclude"
+        precomputed_embeddings_path: str = None,
     ):
         """
         Args:
@@ -34,15 +69,17 @@ class RouterDataset(Dataset):
             embedding_model_name: Sentence transformer model to use
             cache_embeddings: Whether to precompute and cache all embeddings
             include_ties_as: How to treat ties - "weak" (default), "strong", or "exclude"
+            precomputed_embeddings_path: Path to a .pt file with precomputed embeddings
         """
-        self.data_path = data_path
+        self.data_path = get_hf_path(data_path)
         self.embedding_model_name = embedding_model_name
         self.cache_embeddings = cache_embeddings
         self.include_ties_as = include_ties_as
+        self.precomputed_embeddings_path = get_hf_path(precomputed_embeddings_path) if precomputed_embeddings_path else None
         
         # Load data
-        print(f"Loading data from {data_path}...")
-        self.df = pd.read_parquet(data_path)
+        print(f"Loading data from {self.data_path}...")
+        self.df = pd.read_parquet(self.data_path)
         
         # Handle ties and build binary label
         # If a precomputed binary_label exists (e.g., from a balanced split), respect it
@@ -65,40 +102,59 @@ class RouterDataset(Dataset):
         print(f"  Route to strong (1): {(self.df['binary_label'] == 1).sum()}")
         print(f"  Route to weak (0): {(self.df['binary_label'] == 0).sum()}")
         
-        # Load embedding model
-        print(f"Loading embedding model: {embedding_model_name}...")
-        self.embedding_model = SentenceTransformer(embedding_model_name)
-        
-        # Cache embeddings if requested
+        # Load embeddings
         self.embeddings = None
-        if cache_embeddings:
-            # Generate cache file path based on data file and model
-            cache_key = f"{data_path}_{embedding_model_name}".encode('utf-8')
-            cache_hash = hashlib.md5(cache_key).hexdigest()[:16]
-            cache_dir = os.path.join(os.path.dirname(data_path), '.embedding_cache')
-            os.makedirs(cache_dir, exist_ok=True)
-            cache_file = os.path.join(cache_dir, f"{os.path.basename(data_path)}_{cache_hash}.pt")
+        self.embedding_model = None
+        
+        if self.precomputed_embeddings_path and os.path.exists(self.precomputed_embeddings_path):
+            # Use precomputed embeddings (e.g., generated on Kaggle GPU)
+            print(f"Loading precomputed embeddings from {self.precomputed_embeddings_path}...")
+            self.embeddings = torch.load(self.precomputed_embeddings_path, map_location='cpu')
+            assert len(self.embeddings) == len(self.df), (
+                f"Embedding count ({len(self.embeddings)}) != dataset rows ({len(self.df)}). "
+                f"Make sure the .pt file matches the parquet file."
+            )
+            print(f"Loaded {len(self.embeddings)} precomputed embeddings of dimension {self.embeddings.shape[1]}")
+        else:
+            # Load embedding model and compute embeddings
+            print(f"Loading embedding model: {embedding_model_name}...")
+            self.embedding_model = SentenceTransformer(embedding_model_name)
             
-            # Try to load from cache
-            if os.path.exists(cache_file):
-                print(f"Loading cached embeddings from {cache_file}...")
-                self.embeddings = torch.load(cache_file)
-                print(f"Loaded {len(self.embeddings)} cached embeddings of dimension {self.embeddings.shape[1]}")
-            else:
-                print("Caching embeddings...")
-                prompts = self.df['prompt'].tolist()
-                self.embeddings = self.embedding_model.encode(
-                    prompts,
-                    convert_to_tensor=True,
-                    show_progress_bar=True,
-                    batch_size=64
-                )
-                print(f"Cached {len(self.embeddings)} embeddings of dimension {self.embeddings.shape[1]}")
+            if cache_embeddings:
+                # Generate cache file path based on data file and model
+                cache_key = f"{self.data_path}_{embedding_model_name}".encode('utf-8')
+                cache_hash = hashlib.md5(cache_key).hexdigest()[:16]
                 
-                # Save to disk
-                print(f"Saving embeddings to {cache_file}...")
-                torch.save(self.embeddings, cache_file)
-                print("Embeddings saved to disk")
+                # Use a safe cache directory even if downloaded from HF 
+                # (which might reside in a read-only cache dir)
+                base_dir = os.path.dirname(self.data_path)
+                if not base_dir or not os.access(base_dir, os.W_OK):
+                    base_dir = "."
+                    
+                cache_dir = os.path.join(base_dir, '.embedding_cache')
+                os.makedirs(cache_dir, exist_ok=True)
+                cache_file = os.path.join(cache_dir, f"{os.path.basename(self.data_path)}_{cache_hash}.pt")
+                
+                # Try to load from cache
+                if os.path.exists(cache_file):
+                    print(f"Loading cached embeddings from {cache_file}...")
+                    self.embeddings = torch.load(cache_file)
+                    print(f"Loaded {len(self.embeddings)} cached embeddings of dimension {self.embeddings.shape[1]}")
+                else:
+                    print("Caching embeddings...")
+                    prompts = self.df['prompt'].tolist()
+                    self.embeddings = self.embedding_model.encode(
+                        prompts,
+                        convert_to_tensor=True,
+                        show_progress_bar=True,
+                        batch_size=64
+                    )
+                    print(f"Cached {len(self.embeddings)} embeddings of dimension {self.embeddings.shape[1]}")
+                    
+                    # Save to disk
+                    print(f"Saving embeddings to {cache_file}...")
+                    torch.save(self.embeddings, cache_file)
+                    print("Embeddings saved to disk")
     
     def __len__(self) -> int:
         return len(self.df)
@@ -133,12 +189,17 @@ def create_dataloaders(
     embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
     include_ties_as: str = "weak",
     seed: int = 42,
+    train_embeddings_path: str = None,
+    val_embeddings_path: str = None,
 ) -> Tuple[DataLoader, DataLoader, int]:
     """
     Create train and validation dataloaders.
     
     If val_path is provided, use that file as the validation set (no random split).
     Otherwise, split the training data according to val_split.
+    
+    If train_embeddings_path / val_embeddings_path are provided, load precomputed
+    embeddings instead of running the embedding model.
     """
 
     if val_path:
@@ -148,12 +209,14 @@ def create_dataloaders(
             embedding_model_name=embedding_model_name,
             cache_embeddings=True,
             include_ties_as=include_ties_as,
+            precomputed_embeddings_path=train_embeddings_path,
         )
         val_dataset = RouterDataset(
             data_path=val_path,
             embedding_model_name=embedding_model_name,
             cache_embeddings=True,
             include_ties_as=include_ties_as,
+            precomputed_embeddings_path=val_embeddings_path,
         )
     else:
         # Load full dataset and split
@@ -162,6 +225,7 @@ def create_dataloaders(
             embedding_model_name=embedding_model_name,
             cache_embeddings=True,
             include_ties_as=include_ties_as,
+            precomputed_embeddings_path=train_embeddings_path,
         )
         n_total = len(full_dataset)
         n_val = int(n_total * val_split)
