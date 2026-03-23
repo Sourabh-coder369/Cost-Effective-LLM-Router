@@ -1,0 +1,64 @@
+{
+  "baseline_always_strong_quality": 0.6260276436805725,
+  "comparison": [
+    {
+      "drop": 0.0,
+      "baseline_quality": 0.6266292333602905,
+      "baseline_cost_adv": 31.86284339282134,
+      "domain_quality": 0.6264287233352661,
+      "domain_cost_adv": 35.97353118107078,
+      "delta_cost_adv": 4.110687788249443
+    },
+    {
+      "drop": 0.5,
+      "baseline_quality": 0.6216161847114563,
+      "baseline_cost_adv": 35.29175857228795,
+      "domain_quality": 0.6214156746864319,
+      "domain_cost_adv": 39.28213354722278,
+      "delta_cost_adv": 3.9903749749348307
+    },
+    {
+      "drop": 1.0,
+      "baseline_quality": 0.6170042157173157,
+      "baseline_cost_adv": 37.076398636454776,
+      "domain_quality": 0.6176057457923889,
+      "domain_cost_adv": 41.58812913575296,
+      "delta_cost_adv": 4.5117304992981815
+    },
+    {
+      "drop": 1.5,
+      "baseline_quality": 0.611790657043457,
+      "baseline_cost_adv": 39.76338480048125,
+      "domain_quality": 0.611189067363739,
+      "domain_cost_adv": 43.79386404652096,
+      "delta_cost_adv": 4.030479246039711
+    },
+    {
+      "drop": 2.0,
+      "baseline_quality": 0.6069781184196472,
+      "baseline_cost_adv": 43.45297774212954,
+      "domain_quality": 0.6073791980743408,
+      "domain_cost_adv": 46.09985963505113,
+      "delta_cost_adv": 2.6468818929215914
+    },
+    {
+      "drop": 3.0,
+      "baseline_quality": 0.5961499810218811,
+      "baseline_cost_adv": 48.70663725686786,
+      "domain_quality": 0.5965510606765747,
+      "domain_cost_adv": 49.147784239021455,
+      "delta_cost_adv": 0.4411469821535974
+    }
+  ],
+  "training_history": [],
+  "config": {
+    "query_embedding_dim": 1024,
+    "model_embedding_dim": 64,
+    "batch_size": 64,
+    "num_epochs": 0,
+    "learning_rate": 0.0003,
+    "weight_decay": 1e-05,
+    "early_stopping": 8,
+    "seed": 42
+  }
+}
