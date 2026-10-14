@@ -1,0 +1,396 @@
+{
+  "test_data": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\data\\original_gpt4_llama7b\\gpt4_llama7b_data_unbalanced\\router_test.parquet",
+  "threshold": 0.5,
+  "label": "binary_label=1 means GPT-4 wins; 0 means Llama-2-7B-Chat wins",
+  "laya_feature_subset_rows": 4880,
+  "variants": {
+    "mpnet_64": {
+      "checkpoint": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\router\\domain_specific\\checkpoints_domain_mf\\best_model.pt",
+      "embedding": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\data\\original_gpt4_llama7b\\gpt4_llama7b_data_unbalanced\\.embedding_cache\\router_test.parquet_mpnet_base_v2.pt",
+      "model_vector_dimension": 64,
+      "validation_at_0_5": {
+        "n": 4986,
+        "accuracy": 0.596470116325712,
+        "balanced_accuracy": 0.5883273579702151,
+        "roc_auc": 0.6354744380860452,
+        "selected_gpt4_fraction": 0.5543521861211392,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1030,
+            820
+          ],
+          [
+            1192,
+            1944
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6289610910549539
+      },
+      "validation_selected_threshold": 0.35544946789741516,
+      "validation_accuracy_at_selected_threshold": 0.6536301644604894,
+      "all_test": {
+        "n": 4987,
+        "accuracy": 0.6071786645277722,
+        "balanced_accuracy": 0.6002284230394691,
+        "roc_auc": 0.6387116940573943,
+        "selected_gpt4_fraction": 0.5528373771806697,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1068,
+            797
+          ],
+          [
+            1162,
+            1960
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "all_test_at_validation_selected_threshold": {
+        "n": 4987,
+        "accuracy": 0.6510928413876078,
+        "balanced_accuracy": 0.5516464492239628,
+        "roc_auc": 0.6387116940573943,
+        "selected_gpt4_fraction": 0.9075596551032685,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            293,
+            1572
+          ],
+          [
+            168,
+            2954
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "same_rows_as_laya_tests": {
+        "n": 4880,
+        "accuracy": 0.6065573770491803,
+        "balanced_accuracy": 0.6007633325310319,
+        "roc_auc": 0.640176212621348,
+        "selected_gpt4_fraction": 0.5483606557377049,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1058,
+            774
+          ],
+          [
+            1146,
+            1902
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      },
+      "same_rows_at_validation_selected_threshold": {
+        "n": 4880,
+        "accuracy": 0.6502049180327869,
+        "balanced_accuracy": 0.5522993100207453,
+        "roc_auc": 0.640176212621348,
+        "selected_gpt4_fraction": 0.9059426229508196,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            292,
+            1540
+          ],
+          [
+            167,
+            2881
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      }
+    },
+    "bge_64": {
+      "checkpoint": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\router\\domain_specific\\checkpoints_domain_mf_bge_large\\best_model.pt",
+      "embedding": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\data\\original_gpt4_llama7b\\bge_embeddings\\router_test_bge_large_embeddings.pt",
+      "model_vector_dimension": 64,
+      "validation_at_0_5": {
+        "n": 4986,
+        "accuracy": 0.5808263136782993,
+        "balanced_accuracy": 0.5934025096525096,
+        "roc_auc": 0.6323191878102592,
+        "selected_gpt4_fraction": 0.4753309265944645,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1188,
+            662
+          ],
+          [
+            1428,
+            1708
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6289610910549539
+      },
+      "validation_selected_threshold": 0.3249848484992981,
+      "validation_accuracy_at_selected_threshold": 0.6510228640192539,
+      "all_test": {
+        "n": 4987,
+        "accuracy": 0.5817124523761781,
+        "balanced_accuracy": 0.595000884495228,
+        "roc_auc": 0.6369906209156502,
+        "selected_gpt4_fraction": 0.47122518548225384,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1208,
+            657
+          ],
+          [
+            1429,
+            1693
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "all_test_at_validation_selected_threshold": {
+        "n": 4987,
+        "accuracy": 0.6426709444555845,
+        "balanced_accuracy": 0.5425452509476121,
+        "roc_auc": 0.6369906209156502,
+        "selected_gpt4_fraction": 0.9079606978143172,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            271,
+            1594
+          ],
+          [
+            188,
+            2934
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "same_rows_as_laya_tests": {
+        "n": 4880,
+        "accuracy": 0.582172131147541,
+        "balanced_accuracy": 0.5962682953386285,
+        "roc_auc": 0.6383266212220198,
+        "selected_gpt4_fraction": 0.46741803278688526,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1196,
+            636
+          ],
+          [
+            1403,
+            1645
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      },
+      "same_rows_at_validation_selected_threshold": {
+        "n": 4880,
+        "accuracy": 0.6415983606557377,
+        "balanced_accuracy": 0.5431229870829465,
+        "roc_auc": 0.6383266212220198,
+        "selected_gpt4_fraction": 0.9059426229508196,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            271,
+            1561
+          ],
+          [
+            188,
+            2860
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      }
+    },
+    "bge_128": {
+      "checkpoint": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\router\\domain_specific\\checkpoints_domain_mf_bge_modeldim_128\\best_model.pt",
+      "embedding": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\data\\original_gpt4_llama7b\\bge_embeddings\\router_test_bge_large_embeddings.pt",
+      "model_vector_dimension": 128,
+      "validation_at_0_5": {
+        "n": 4986,
+        "accuracy": 0.5956678700361011,
+        "balanced_accuracy": 0.5925661886376172,
+        "roc_auc": 0.6347764409817982,
+        "selected_gpt4_fraction": 0.5359005214600883,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1074,
+            776
+          ],
+          [
+            1240,
+            1896
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6289610910549539
+      },
+      "validation_selected_threshold": 0.36807161569595337,
+      "validation_accuracy_at_selected_threshold": 0.652426795026073,
+      "all_test": {
+        "n": 4987,
+        "accuracy": 0.5987567675957489,
+        "balanced_accuracy": 0.59738790525768,
+        "roc_auc": 0.6363992972127237,
+        "selected_gpt4_fraction": 0.5299779426508924,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1104,
+            761
+          ],
+          [
+            1240,
+            1882
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "all_test_at_validation_selected_threshold": {
+        "n": 4987,
+        "accuracy": 0.6416683376779627,
+        "balanced_accuracy": 0.5510275601843185,
+        "roc_auc": 0.6363992972127237,
+        "selected_gpt4_fraction": 0.8724684178865049,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            357,
+            1508
+          ],
+          [
+            279,
+            2843
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "same_rows_as_laya_tests": {
+        "n": 4880,
+        "accuracy": 0.5991803278688524,
+        "balanced_accuracy": 0.5986687526504602,
+        "roc_auc": 0.6377515788146569,
+        "selected_gpt4_fraction": 0.5266393442622951,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1093,
+            739
+          ],
+          [
+            1217,
+            1831
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      },
+      "same_rows_at_validation_selected_threshold": {
+        "n": 4880,
+        "accuracy": 0.6405737704918033,
+        "balanced_accuracy": 0.5516667812811609,
+        "roc_auc": 0.6377515788146569,
+        "selected_gpt4_fraction": 0.8696721311475409,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            357,
+            1475
+          ],
+          [
+            279,
+            2769
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      }
+    },
+    "bge_256": {
+      "checkpoint": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\router\\domain_specific\\checkpoints_domain_mf_bge_modeldim_256\\best_model.pt",
+      "embedding": "C:\\vs\\ML_Projects\\Cost-Effective-LLM-Router\\data\\original_gpt4_llama7b\\bge_embeddings\\router_test_bge_large_embeddings.pt",
+      "model_vector_dimension": 256,
+      "validation_at_0_5": {
+        "n": 4986,
+        "accuracy": 0.5932611311672683,
+        "balanced_accuracy": 0.5932020477109763,
+        "roc_auc": 0.6355696704357419,
+        "selected_gpt4_fraction": 0.52426795026073,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1097,
+            753
+          ],
+          [
+            1275,
+            1861
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6289610910549539
+      },
+      "validation_selected_threshold": 0.34160780906677246,
+      "validation_accuracy_at_selected_threshold": 0.6514239871640594,
+      "all_test": {
+        "n": 4987,
+        "accuracy": 0.5975536394626028,
+        "balanced_accuracy": 0.5985858381150462,
+        "roc_auc": 0.6379800533445082,
+        "selected_gpt4_fraction": 0.5207539602967716,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1124,
+            741
+          ],
+          [
+            1266,
+            1856
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "all_test_at_validation_selected_threshold": {
+        "n": 4987,
+        "accuracy": 0.6438740725887308,
+        "balanced_accuracy": 0.5437220589674935,
+        "roc_auc": 0.6379800533445082,
+        "selected_gpt4_fraction": 0.908361740525366,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            273,
+            1592
+          ],
+          [
+            184,
+            2938
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6260276719470623
+      },
+      "same_rows_as_laya_tests": {
+        "n": 4880,
+        "accuracy": 0.5971311475409836,
+        "balanced_accuracy": 0.5992060080917833,
+        "roc_auc": 0.6390966873545829,
+        "selected_gpt4_fraction": 0.5163934426229508,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            1113,
+            719
+          ],
+          [
+            1247,
+            1801
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      },
+      "same_rows_at_validation_selected_threshold": {
+        "n": 4880,
+        "accuracy": 0.642827868852459,
+        "balanced_accuracy": 0.5443250065903333,
+        "roc_auc": 0.6390966873545829,
+        "selected_gpt4_fraction": 0.9063524590163935,
+        "confusion_matrix_rows_true_0_1_cols_pred_0_1": [
+          [
+            273,
+            1559
+          ],
+          [
+            184,
+            2864
+          ]
+        ],
+        "always_gpt4_accuracy": 0.6245901639344262
+      }
+    }
+  }
+}

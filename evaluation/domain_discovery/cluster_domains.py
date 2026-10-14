@@ -9,7 +9,7 @@ Two approaches:
   2. Seed-based similarity — find math queries using example anchors
 
 Usage:
-    python cluster_domains.py
+    python evaluation/domain_discovery/cluster_domains.py
 """
 
 import torch
@@ -19,18 +19,20 @@ from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import Counter
 import os
+from pathlib import Path
 
 # ──────────────────────────────────────────────────────────────
 # Configuration
 # ──────────────────────────────────────────────────────────────
-DATA_PATH = "gpt4_llama7b_data_unbalanced/router_train.parquet"
-EMBEDDING_CACHE_DIR = "gpt4_llama7b_data_unbalanced/.embedding_cache"
+ROOT = Path(__file__).resolve().parents[2]
+DATA_PATH = ROOT / "data/original_gpt4_llama7b/gpt4_llama7b_data_unbalanced/router_train.parquet"
+EMBEDDING_CACHE_DIR = ROOT / "data/original_gpt4_llama7b/gpt4_llama7b_data_unbalanced/.embedding_cache"
 # The 768-dim cached embeddings file
 EMBEDDING_FILE = os.path.join(EMBEDDING_CACHE_DIR, "router_train.parquet_6b59c6b9cae834b6.pt")
 
 NUM_CLUSTERS = 12       # Number of KMeans clusters
 MATH_SIM_THRESHOLD = 0.5  # Cosine similarity threshold for seed-based math detection
-OUTPUT_DIR = "cluster_results"
+OUTPUT_DIR = ROOT / "artifacts/domain_discovery/clusters"
 
 
 def load_data():

@@ -1,0 +1,60 @@
+{
+  "baseline_always_strong_quality": 0.6260276719470623,
+  "comparison": [
+    {
+      "drop": 0.0,
+      "baseline_quality": 0.6268297573691598,
+      "baseline_cost_adv": 31.48185281732504,
+      "domain_quality": 0.6262281933025867,
+      "domain_cost_adv": 30.419089633045914,
+      "delta_cost_adv": -1.0627631842791274
+    },
+    {
+      "drop": 0.5,
+      "baseline_quality": 0.6222177661920995,
+      "baseline_cost_adv": 33.06597152596752,
+      "domain_quality": 0.6216162021255264,
+      "domain_cost_adv": 35.41207138560256,
+      "delta_cost_adv": 2.3460998596350393
+    },
+    {
+      "drop": 1.0,
+      "baseline_quality": 0.616402646881893,
+      "baseline_cost_adv": 36.815720874273104,
+      "domain_quality": 0.6182073390816122,
+      "domain_cost_adv": 37.27691999197914,
+      "delta_cost_adv": 0.4611991177060375
+    },
+    {
+      "drop": 1.5,
+      "baseline_quality": 0.6113896129937838,
+      "baseline_cost_adv": 38.84098656506918,
+      "domain_quality": 0.61259274112693,
+      "domain_cost_adv": 43.33266492881492,
+      "delta_cost_adv": 4.491678363745741
+    },
+    {
+      "drop": 2.0,
+      "baseline_quality": 0.6061760577501504,
+      "baseline_cost_adv": 41.8889111690395,
+      "domain_quality": 0.6075797072388209,
+      "domain_cost_adv": 44.555845197513534,
+      "delta_cost_adv": 2.6669340284740315
+    },
+    {
+      "drop": 3.0,
+      "baseline_quality": 0.5971525967515541,
+      "baseline_cost_adv": 48.12512532584721,
+      "domain_quality": 0.5977541608181272,
+      "domain_cost_adv": 47.70403047924604,
+      "delta_cost_adv": -0.42109484660116436
+    }
+  ],
+  "config": {
+    "embedding_model": "sentence-transformers/all-mpnet-base-v2",
+    "query_embedding_dim": 768,
+    "model_embedding_dim": 64,
+    "test_examples": 4987,
+    "device": "cpu"
+  }
+}

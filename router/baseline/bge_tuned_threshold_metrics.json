@@ -1,0 +1,51 @@
+{
+  "selection_rule": "Threshold maximizes validation routing accuracy",
+  "device": "cpu",
+  "models": {
+    "32": {
+      "threshold": 0.366,
+      "validation_accuracy": 0.6536301644604894,
+      "test_accuracy": 0.6436735512332064,
+      "test_f1": 0.7653505876138914,
+      "test_auc": 0.6356566647144798,
+      "test_strong_usage": 0.8925205534389412,
+      "test_cost_saving": 0.10747944656105879
+    },
+    "64": {
+      "threshold": 0.334,
+      "validation_accuracy": 0.6542318491776975,
+      "test_accuracy": 0.6432725085221576,
+      "test_f1": 0.7683292095324912,
+      "test_auc": 0.6380801816392531,
+      "test_strong_usage": 0.9137758171245237,
+      "test_cost_saving": 0.08622418287547629
+    },
+    "128": {
+      "threshold": 0.338,
+      "validation_accuracy": 0.6520256718812676,
+      "test_accuracy": 0.6422699017445358,
+      "test_f1": 0.7666753858226524,
+      "test_auc": 0.6385928453782119,
+      "test_strong_usage": 0.9071586123922197,
+      "test_cost_saving": 0.09284138760778027
+    },
+    "256": {
+      "threshold": 0.368,
+      "validation_accuracy": 0.650220617729643,
+      "test_accuracy": 0.6458792861439744,
+      "test_f1": 0.7642819006940736,
+      "test_auc": 0.6331488201864137,
+      "test_strong_usage": 0.8762783236414678,
+      "test_cost_saving": 0.12372167635853215
+    },
+    "512": {
+      "threshold": 0.339,
+      "validation_accuracy": 0.6522262334536703,
+      "test_accuracy": 0.644074593944255,
+      "test_f1": 0.7696898923056961,
+      "test_auc": 0.6365693263924789,
+      "test_strong_usage": 0.9193904150792059,
+      "test_cost_saving": 0.08060958492079406
+    }
+  }
+}

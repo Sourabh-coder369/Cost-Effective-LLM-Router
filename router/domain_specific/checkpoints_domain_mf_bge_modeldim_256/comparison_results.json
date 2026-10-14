@@ -1,0 +1,447 @@
+{
+  "baseline_always_strong_quality": 0.6260276719470623,
+  "comparison": [
+    {
+      "drop": 0.0,
+      "baseline_quality": 0.6262281933025867,
+      "baseline_cost_adv": 30.378985361941048,
+      "baseline_threshold": 0.4364364364364364,
+      "domain_quality": 0.6260276719470623,
+      "domain_cost_adv": 36.17405253659515,
+      "domain_threshold": 0.46146146146146144,
+      "delta_cost_adv": 5.7950671746541005
+    },
+    {
+      "drop": 0.5,
+      "baseline_quality": 0.6222177661920995,
+      "baseline_cost_adv": 33.226388610387005,
+      "baseline_threshold": 0.4444444444444444,
+      "domain_quality": 0.621415680770002,
+      "domain_cost_adv": 38.159213956286344,
+      "domain_threshold": 0.4674674674674675,
+      "delta_cost_adv": 4.932825345899339
+    },
+    {
+      "drop": 1.0,
+      "baseline_quality": 0.6168036895929416,
+      "baseline_cost_adv": 37.33707639863646,
+      "baseline_threshold": 0.45645645645645644,
+      "domain_quality": 0.6168036895929416,
+      "domain_cost_adv": 39.90374974934831,
+      "domain_threshold": 0.47347347347347346,
+      "delta_cost_adv": 2.566673350711845
+    },
+    {
+      "drop": 1.5,
+      "baseline_quality": 0.6111890916382595,
+      "baseline_cost_adv": 39.74333266492881,
+      "baseline_threshold": 0.46446446446446443,
+      "domain_quality": 0.6115901343493082,
+      "domain_cost_adv": 42.35011028674553,
+      "domain_threshold": 0.4804804804804805,
+      "delta_cost_adv": 2.6067776218167253
+    },
+    {
+      "drop": 2.0,
+      "baseline_quality": 0.6067776218167235,
+      "baseline_cost_adv": 41.14698215359935,
+      "baseline_threshold": 0.46846846846846846,
+      "domain_quality": 0.6061760577501504,
+      "domain_cost_adv": 44.415480248646475,
+      "domain_threshold": 0.4874874874874875,
+      "delta_cost_adv": 3.2684980950471214
+    },
+    {
+      "drop": 3.0,
+      "baseline_quality": 0.5977541608181272,
+      "baseline_cost_adv": 46.982153599358334,
+      "baseline_threshold": 0.4874874874874875,
+      "domain_quality": 0.5963505113294566,
+      "domain_cost_adv": 48.04491678363746,
+      "domain_threshold": 0.5005005005005005,
+      "delta_cost_adv": 1.0627631842791274
+    },
+    {
+      "drop": 5.0,
+      "baseline_quality": 0.5764988971325447,
+      "baseline_cost_adv": 54.48165229596952,
+      "baseline_threshold": 0.5135135135135135,
+      "domain_quality": 0.5762983757770203,
+      "domain_cost_adv": 54.06055744936835,
+      "domain_threshold": 0.5205205205205206,
+      "delta_cost_adv": -0.42109484660116436
+    },
+    {
+      "drop": 7.0,
+      "baseline_quality": 0.5564467615801083,
+      "baseline_cost_adv": 59.6551032684981,
+      "baseline_threshold": 0.5325325325325325,
+      "domain_quality": 0.5562462402245839,
+      "domain_cost_adv": 60.156406657309006,
+      "domain_threshold": 0.5425425425425425,
+      "delta_cost_adv": 0.5013033888109035
+    },
+    {
+      "drop": 10.0,
+      "baseline_quality": 0.5267696009625025,
+      "baseline_cost_adv": 68.75877280930419,
+      "baseline_threshold": 0.5725725725725725,
+      "domain_quality": 0.5267696009625025,
+      "domain_cost_adv": 69.36033687587728,
+      "domain_threshold": 0.5855855855855856,
+      "delta_cost_adv": 0.6015640665730899
+    },
+    {
+      "drop": 12.0,
+      "baseline_quality": 0.5067174654100661,
+      "baseline_cost_adv": 74.13274513735712,
+      "baseline_threshold": 0.5975975975975976,
+      "domain_quality": 0.5063164226990174,
+      "domain_cost_adv": 74.89472628834972,
+      "domain_threshold": 0.6116116116116116,
+      "delta_cost_adv": 0.7619811509925967
+    },
+    {
+      "drop": 15.0,
+      "baseline_quality": 0.4762382193703629,
+      "baseline_cost_adv": 82.15359935833166,
+      "baseline_threshold": 0.6466466466466466,
+      "domain_quality": 0.47663926208141166,
+      "domain_cost_adv": 82.31401644275115,
+      "domain_threshold": 0.6566566566566566,
+      "delta_cost_adv": 0.16041708441949254
+    },
+    {
+      "drop": 20.0,
+      "baseline_quality": 0.42650892320032086,
+      "baseline_cost_adv": 91.41768598355725,
+      "baseline_threshold": 0.7297297297297297,
+      "domain_quality": 0.42711048726689393,
+      "domain_cost_adv": 91.19711249248044,
+      "domain_threshold": 0.7297297297297297,
+      "delta_cost_adv": -0.2205734910768058
+    },
+    {
+      "drop": 25.0,
+      "baseline_quality": 0.37637858431923,
+      "baseline_cost_adv": 99.7192701022659,
+      "baseline_threshold": 0.8478478478478478,
+      "domain_quality": 0.37617806296370565,
+      "domain_cost_adv": 99.69921796671346,
+      "domain_threshold": 0.8538538538538538,
+      "delta_cost_adv": -0.020052135552433015
+    },
+    {
+      "drop": 30.0,
+      "baseline_quality": 0.3739723280529376,
+      "baseline_cost_adv": 100.0,
+      "baseline_threshold": 0.8868868868868869,
+      "domain_quality": 0.3739723280529376,
+      "domain_cost_adv": 100.0,
+      "domain_threshold": 0.8798798798798799,
+      "delta_cost_adv": 0.0
+    }
+  ],
+  "per_domain": {
+    "math": {
+      "examples": 267,
+      "always_strong_quality": 0.704119850187266,
+      "comparison": [
+        {
+          "drop": 0.0,
+          "baseline_quality": 0.704119850187266,
+          "baseline_cost_adv": 6.741573033707871,
+          "baseline_threshold": 0.39039039039039036,
+          "domain_quality": 0.704119850187266,
+          "domain_cost_adv": 11.23595505617978,
+          "domain_threshold": 0.4724724724724725,
+          "delta_cost_adv": 4.494382022471909
+        },
+        {
+          "drop": 0.5,
+          "baseline_quality": 0.700374531835206,
+          "baseline_cost_adv": 7.116104868913853,
+          "baseline_threshold": 0.3923923923923924,
+          "domain_quality": 0.700374531835206,
+          "domain_cost_adv": 11.610486891385763,
+          "domain_threshold": 0.4744744744744745,
+          "delta_cost_adv": 4.49438202247191
+        },
+        {
+          "drop": 1.0,
+          "baseline_quality": 0.6966292134831461,
+          "baseline_cost_adv": 8.239700374531832,
+          "baseline_threshold": 0.4014014014014014,
+          "domain_quality": 0.6966292134831461,
+          "domain_cost_adv": 11.985018726591756,
+          "domain_threshold": 0.47647647647647645,
+          "delta_cost_adv": 3.7453183520599236
+        },
+        {
+          "drop": 1.5,
+          "baseline_quality": 0.6891385767790262,
+          "baseline_cost_adv": 8.98876404494382,
+          "baseline_threshold": 0.4064064064064064,
+          "domain_quality": 0.6891385767790262,
+          "domain_cost_adv": 14.981273408239703,
+          "domain_threshold": 0.4824824824824825,
+          "delta_cost_adv": 5.992509363295882
+        },
+        {
+          "drop": 2.0,
+          "baseline_quality": 0.6853932584269663,
+          "baseline_cost_adv": 9.363295880149813,
+          "baseline_threshold": 0.41041041041041043,
+          "domain_quality": 0.6853932584269663,
+          "domain_cost_adv": 15.355805243445698,
+          "domain_threshold": 0.48348348348348347,
+          "delta_cost_adv": 5.992509363295884
+        },
+        {
+          "drop": 3.0,
+          "baseline_quality": 0.6741573033707865,
+          "baseline_cost_adv": 15.73033707865169,
+          "baseline_threshold": 0.44244244244244246,
+          "domain_quality": 0.6741573033707865,
+          "domain_cost_adv": 18.726591760299627,
+          "domain_threshold": 0.4944944944944945,
+          "delta_cost_adv": 2.9962546816479367
+        },
+        {
+          "drop": 5.0,
+          "baseline_quality": 0.6629213483146067,
+          "baseline_cost_adv": 18.352059925093634,
+          "baseline_threshold": 0.4574574574574575,
+          "domain_quality": 0.6554307116104869,
+          "domain_cost_adv": 22.097378277153556,
+          "domain_threshold": 0.4994994994994995,
+          "delta_cost_adv": 3.745318352059922
+        },
+        {
+          "drop": 7.0,
+          "baseline_quality": 0.6367041198501873,
+          "baseline_cost_adv": 25.468164794007485,
+          "baseline_threshold": 0.4924924924924925,
+          "domain_quality": 0.6367041198501873,
+          "domain_cost_adv": 30.711610486891384,
+          "domain_threshold": 0.5195195195195195,
+          "delta_cost_adv": 5.243445692883899
+        },
+        {
+          "drop": 10.0,
+          "baseline_quality": 0.6067415730337079,
+          "baseline_cost_adv": 32.95880149812734,
+          "baseline_threshold": 0.5125125125125125,
+          "domain_quality": 0.6067415730337079,
+          "domain_cost_adv": 35.20599250936329,
+          "domain_threshold": 0.5285285285285285,
+          "delta_cost_adv": 2.247191011235948
+        },
+        {
+          "drop": 12.0,
+          "baseline_quality": 0.5842696629213483,
+          "baseline_cost_adv": 41.19850187265918,
+          "baseline_threshold": 0.5305305305305306,
+          "domain_quality": 0.5842696629213483,
+          "domain_cost_adv": 42.69662921348315,
+          "domain_threshold": 0.5485485485485485,
+          "delta_cost_adv": 1.4981273408239701
+        },
+        {
+          "drop": 15.0,
+          "baseline_quality": 0.5543071161048689,
+          "baseline_cost_adv": 51.685393258426956,
+          "baseline_threshold": 0.5705705705705706,
+          "domain_quality": 0.5543071161048689,
+          "domain_cost_adv": 51.685393258426956,
+          "domain_threshold": 0.5795795795795796,
+          "delta_cost_adv": 0.0
+        },
+        {
+          "drop": 20.0,
+          "baseline_quality": 0.5056179775280899,
+          "baseline_cost_adv": 62.546816479400746,
+          "baseline_threshold": 0.6216216216216216,
+          "domain_quality": 0.5093632958801498,
+          "domain_cost_adv": 64.41947565543072,
+          "domain_threshold": 0.6366366366366366,
+          "delta_cost_adv": 1.8726591760299698
+        },
+        {
+          "drop": 25.0,
+          "baseline_quality": 0.45692883895131087,
+          "baseline_cost_adv": 74.15730337078652,
+          "baseline_threshold": 0.6956956956956957,
+          "domain_quality": 0.45692883895131087,
+          "domain_cost_adv": 78.65168539325843,
+          "domain_threshold": 0.6886886886886887,
+          "delta_cost_adv": 4.49438202247191
+        },
+        {
+          "drop": 30.0,
+          "baseline_quality": 0.4044943820224719,
+          "baseline_cost_adv": 86.14232209737828,
+          "baseline_threshold": 0.7447447447447447,
+          "domain_quality": 0.40823970037453183,
+          "domain_cost_adv": 85.76779026217228,
+          "domain_threshold": 0.7137137137137137,
+          "delta_cost_adv": -0.37453183520599964
+        }
+      ]
+    },
+    "general": {
+      "examples": 4720,
+      "always_strong_quality": 0.6216101694915255,
+      "comparison": [
+        {
+          "drop": 0.0,
+          "baseline_quality": 0.621822033898305,
+          "baseline_cost_adv": 33.07203389830509,
+          "baseline_threshold": 0.44144144144144143,
+          "domain_quality": 0.621822033898305,
+          "domain_cost_adv": 36.75847457627118,
+          "domain_threshold": 0.4574574574574575,
+          "delta_cost_adv": 3.6864406779660968
+        },
+        {
+          "drop": 0.5,
+          "baseline_quality": 0.6169491525423729,
+          "baseline_cost_adv": 37.24576271186441,
+          "baseline_threshold": 0.45345345345345345,
+          "domain_quality": 0.6167372881355933,
+          "domain_cost_adv": 39.80932203389831,
+          "domain_threshold": 0.4674674674674675,
+          "delta_cost_adv": 2.5635593220339032
+        },
+        {
+          "drop": 1.0,
+          "baseline_quality": 0.6120762711864407,
+          "baseline_cost_adv": 39.34322033898305,
+          "baseline_threshold": 0.45945945945945943,
+          "domain_quality": 0.611864406779661,
+          "domain_cost_adv": 41.52542372881356,
+          "domain_threshold": 0.47347347347347346,
+          "delta_cost_adv": 2.182203389830505
+        },
+        {
+          "drop": 1.5,
+          "baseline_quality": 0.6072033898305085,
+          "baseline_cost_adv": 41.313559322033896,
+          "baseline_threshold": 0.46546546546546547,
+          "domain_quality": 0.6069915254237288,
+          "domain_cost_adv": 43.91949152542372,
+          "domain_threshold": 0.4804804804804805,
+          "delta_cost_adv": 2.605932203389827
+        },
+        {
+          "drop": 2.0,
+          "baseline_quality": 0.6033898305084746,
+          "baseline_cost_adv": 43.432203389830505,
+          "baseline_threshold": 0.47047047047047047,
+          "domain_quality": 0.6016949152542372,
+          "domain_cost_adv": 46.05932203389831,
+          "domain_threshold": 0.4874874874874875,
+          "delta_cost_adv": 2.6271186440678065
+        },
+        {
+          "drop": 3.0,
+          "baseline_quality": 0.5919491525423729,
+          "baseline_cost_adv": 49.06779661016949,
+          "baseline_threshold": 0.4894894894894895,
+          "domain_quality": 0.5921610169491526,
+          "domain_cost_adv": 49.724576271186436,
+          "domain_threshold": 0.5015015015015015,
+          "delta_cost_adv": 0.6567796610169481
+        },
+        {
+          "drop": 5.0,
+          "baseline_quality": 0.5724576271186441,
+          "baseline_cost_adv": 56.271186440677965,
+          "baseline_threshold": 0.5155155155155156,
+          "domain_quality": 0.5720338983050848,
+          "domain_cost_adv": 55.762711864406775,
+          "domain_threshold": 0.5225225225225225,
+          "delta_cost_adv": -0.5084745762711904
+        },
+        {
+          "drop": 7.0,
+          "baseline_quality": 0.5516949152542373,
+          "baseline_cost_adv": 61.77966101694915,
+          "baseline_threshold": 0.5365365365365365,
+          "domain_quality": 0.5523305084745763,
+          "domain_cost_adv": 61.84322033898305,
+          "domain_threshold": 0.5445445445445445,
+          "delta_cost_adv": 0.06355932203390324
+        },
+        {
+          "drop": 10.0,
+          "baseline_quality": 0.5220338983050847,
+          "baseline_cost_adv": 70.72033898305085,
+          "baseline_threshold": 0.5765765765765766,
+          "domain_quality": 0.5222457627118644,
+          "domain_cost_adv": 71.33474576271186,
+          "domain_threshold": 0.5905905905905906,
+          "delta_cost_adv": 0.6144067796610102
+        },
+        {
+          "drop": 12.0,
+          "baseline_quality": 0.502542372881356,
+          "baseline_cost_adv": 76.27118644067797,
+          "baseline_threshold": 0.6036036036036035,
+          "domain_quality": 0.502542372881356,
+          "domain_cost_adv": 76.22881355932203,
+          "domain_threshold": 0.6146146146146146,
+          "delta_cost_adv": -0.04237288135593076
+        },
+        {
+          "drop": 15.0,
+          "baseline_quality": 0.47182203389830507,
+          "baseline_cost_adv": 83.58050847457628,
+          "baseline_threshold": 0.6516516516516516,
+          "domain_quality": 0.4726694915254237,
+          "domain_cost_adv": 83.6228813559322,
+          "domain_threshold": 0.6616616616616616,
+          "delta_cost_adv": 0.04237288135591655
+        },
+        {
+          "drop": 20.0,
+          "baseline_quality": 0.4218220338983051,
+          "baseline_cost_adv": 92.5635593220339,
+          "baseline_threshold": 0.7377377377377378,
+          "domain_quality": 0.42245762711864404,
+          "domain_cost_adv": 92.41525423728814,
+          "domain_threshold": 0.7427427427427428,
+          "delta_cost_adv": -0.14830508474575765
+        },
+        {
+          "drop": 25.0,
+          "baseline_quality": 0.3783898305084746,
+          "baseline_cost_adv": 100.0,
+          "baseline_threshold": 0.8728728728728729,
+          "domain_quality": 0.3783898305084746,
+          "domain_cost_adv": 100.0,
+          "domain_threshold": 0.8798798798798799,
+          "delta_cost_adv": 0.0
+        },
+        {
+          "drop": 30.0,
+          "baseline_quality": 0.3783898305084746,
+          "baseline_cost_adv": 100.0,
+          "baseline_threshold": 0.8728728728728729,
+          "domain_quality": 0.3783898305084746,
+          "domain_cost_adv": 100.0,
+          "domain_threshold": 0.8798798798798799,
+          "delta_cost_adv": 0.0
+        }
+      ]
+    }
+  },
+  "config": {
+    "embedding_model": "BAAI/bge-large-en-v1.5",
+    "query_embedding_dim": 1024,
+    "baseline_model_embedding_dim": 256,
+    "domain_model_embedding_dim": 256,
+    "test_examples": 4987,
+    "device": "cpu"
+  }
+}

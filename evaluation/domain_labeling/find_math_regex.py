@@ -24,18 +24,20 @@ Pattern Groups (with score weights):
 MIN_SCORE = 2  →  a prompt must accumulate at least 2 points.
 
 Usage:
-    python find_math_regex.py
+    python evaluation/domain_labeling/find_math_regex.py
 """
 
 import re
 import pandas as pd
 import os
+from pathlib import Path
 
 # ─────────────────────────────────────────────────────────────
 # Config
 # ─────────────────────────────────────────────────────────────
-DATA_PATH  = "gpt4_llama7b_data_unbalanced/router_train.parquet"
-OUTPUT_DIR = "cluster_results"
+ROOT = Path(__file__).resolve().parents[2]
+DATA_PATH = ROOT / "data/original_gpt4_llama7b/gpt4_llama7b_data_unbalanced/router_train.parquet"
+OUTPUT_DIR = ROOT / "artifacts/domain_discovery/regex_math"
 MIN_SCORE  = 1       # minimum score to classify as math (includes score-1 queries)
 
 # ─────────────────────────────────────────────────────────────

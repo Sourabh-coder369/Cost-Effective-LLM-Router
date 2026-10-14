@@ -1,0 +1,238 @@
+{
+  "definition": "CPT(x) is the minimum strong-model call percentage achieving PGR >= x.",
+  "device": "cpu",
+  "runs": {
+    "128": {
+      "overall": {
+        "baseline": {
+          "examples": 4987,
+          "strong_quality": 0.6260276719470623,
+          "weak_quality": 0.3739723280529376,
+          "cpt_50": {
+            "strong_call_pct": 23.320633647483458,
+            "threshold": 0.6174172163009644,
+            "achieved_pgr": 0.5003977724741447,
+            "achieved_quality": 0.5001002606777621
+          },
+          "cpt_80": {
+            "strong_call_pct": 44.91678363745739,
+            "threshold": 0.5147438049316406,
+            "achieved_pgr": 0.800318217979316,
+            "achieved_quality": 0.5756968117104472
+          },
+          "apgr": 0.8043754972155928
+        },
+        "domain": {
+          "examples": 4987,
+          "strong_quality": 0.6260276719470623,
+          "weak_quality": 0.3739723280529376,
+          "cpt_50": {
+            "strong_call_pct": 23.68157208742731,
+            "threshold": 0.6249709725379944,
+            "achieved_pgr": 0.5003977724741447,
+            "achieved_quality": 0.5001002606777621
+          },
+          "cpt_80": {
+            "strong_call_pct": 45.678764788449975,
+            "threshold": 0.52386474609375,
+            "achieved_pgr": 0.800318217979316,
+            "achieved_quality": 0.5756968117104472
+          },
+          "apgr": 0.7994431185361974
+        }
+      },
+      "math": {
+        "baseline": {
+          "examples": 267,
+          "strong_quality": 0.704119850187266,
+          "weak_quality": 0.2958801498127341,
+          "cpt_50": {
+            "strong_call_pct": 34.831460674157306,
+            "threshold": 0.6461227536201477,
+            "achieved_pgr": 0.5045871559633027,
+            "achieved_quality": 0.50187265917603
+          },
+          "cpt_80": {
+            "strong_call_pct": 68.91385767790263,
+            "threshold": 0.4962063133716583,
+            "achieved_pgr": 0.8073394495412842,
+            "achieved_quality": 0.6254681647940075
+          },
+          "apgr": 0.6522935779816513
+        },
+        "domain": {
+          "examples": 267,
+          "strong_quality": 0.704119850187266,
+          "weak_quality": 0.2958801498127341,
+          "cpt_50": {
+            "strong_call_pct": 36.329588014981276,
+            "threshold": 0.6543470025062561,
+            "achieved_pgr": 0.5045871559633027,
+            "achieved_quality": 0.50187265917603
+          },
+          "cpt_80": {
+            "strong_call_pct": 62.172284644194754,
+            "threshold": 0.5430748462677002,
+            "achieved_pgr": 0.8073394495412842,
+            "achieved_quality": 0.6254681647940075
+          },
+          "apgr": 0.6596330275229356
+        }
+      },
+      "general": {
+        "baseline": {
+          "examples": 4720,
+          "strong_quality": 0.6216101694915255,
+          "weak_quality": 0.3783898305084746,
+          "cpt_50": {
+            "strong_call_pct": 22.60593220338983,
+            "threshold": 0.6168285608291626,
+            "achieved_pgr": 0.5008710801393728,
+            "achieved_quality": 0.5002118644067797
+          },
+          "cpt_80": {
+            "strong_call_pct": 43.75,
+            "threshold": 0.5161277651786804,
+            "achieved_pgr": 0.8005226480836234,
+            "achieved_quality": 0.573093220338983
+          },
+          "apgr": 0.8151567944250869
+        },
+        "domain": {
+          "examples": 4720,
+          "strong_quality": 0.6216101694915255,
+          "weak_quality": 0.3783898305084746,
+          "cpt_50": {
+            "strong_call_pct": 23.326271186440678,
+            "threshold": 0.620813250541687,
+            "achieved_pgr": 0.5008710801393728,
+            "achieved_quality": 0.5002118644067797
+          },
+          "cpt_80": {
+            "strong_call_pct": 44.42796610169491,
+            "threshold": 0.52386474609375,
+            "achieved_pgr": 0.8005226480836234,
+            "achieved_quality": 0.573093220338983
+          },
+          "apgr": 0.8087108013937281
+        }
+      }
+    },
+    "256": {
+      "overall": {
+        "baseline": {
+          "examples": 4987,
+          "strong_quality": 0.6260276719470623,
+          "weak_quality": 0.3739723280529376,
+          "cpt_50": {
+            "strong_call_pct": 23.962301985161417,
+            "threshold": 0.6079921126365662,
+            "achieved_pgr": 0.5003977724741447,
+            "achieved_quality": 0.5001002606777621
+          },
+          "cpt_80": {
+            "strong_call_pct": 45.157409264086624,
+            "threshold": 0.5147190690040588,
+            "achieved_pgr": 0.800318217979316,
+            "achieved_quality": 0.5756968117104472
+          },
+          "apgr": 0.7905330151153541
+        },
+        "domain": {
+          "examples": 4987,
+          "strong_quality": 0.6260276719470623,
+          "weak_quality": 0.3739723280529376,
+          "cpt_50": {
+            "strong_call_pct": 23.8419891718468,
+            "threshold": 0.619084894657135,
+            "achieved_pgr": 0.5003977724741447,
+            "achieved_quality": 0.5001002606777621
+          },
+          "cpt_80": {
+            "strong_call_pct": 45.59855624624022,
+            "threshold": 0.5223953127861023,
+            "achieved_pgr": 0.800318217979316,
+            "achieved_quality": 0.5756968117104472
+          },
+          "apgr": 0.8011933174224344
+        }
+      },
+      "math": {
+        "baseline": {
+          "examples": 267,
+          "strong_quality": 0.704119850187266,
+          "weak_quality": 0.2958801498127341,
+          "cpt_50": {
+            "strong_call_pct": 34.831460674157306,
+            "threshold": 0.6360439658164978,
+            "achieved_pgr": 0.5045871559633027,
+            "achieved_quality": 0.50187265917603
+          },
+          "cpt_80": {
+            "strong_call_pct": 73.40823970037454,
+            "threshold": 0.49348118901252747,
+            "achieved_pgr": 0.8073394495412842,
+            "achieved_quality": 0.6254681647940075
+          },
+          "apgr": 0.6449541284403669
+        },
+        "domain": {
+          "examples": 267,
+          "strong_quality": 0.704119850187266,
+          "weak_quality": 0.2958801498127341,
+          "cpt_50": {
+            "strong_call_pct": 34.831460674157306,
+            "threshold": 0.6398004293441772,
+            "achieved_pgr": 0.5045871559633027,
+            "achieved_quality": 0.50187265917603
+          },
+          "cpt_80": {
+            "strong_call_pct": 66.66666666666666,
+            "threshold": 0.5259426832199097,
+            "achieved_pgr": 0.8073394495412842,
+            "achieved_quality": 0.6254681647940075
+          },
+          "apgr": 0.6724770642201834
+        }
+      },
+      "general": {
+        "baseline": {
+          "examples": 4720,
+          "strong_quality": 0.6216101694915255,
+          "weak_quality": 0.3783898305084746,
+          "cpt_50": {
+            "strong_call_pct": 23.36864406779661,
+            "threshold": 0.6055347323417664,
+            "achieved_pgr": 0.5008710801393728,
+            "achieved_quality": 0.5002118644067797
+          },
+          "cpt_80": {
+            "strong_call_pct": 43.79237288135593,
+            "threshold": 0.51513671875,
+            "achieved_pgr": 0.8005226480836234,
+            "achieved_quality": 0.573093220338983
+          },
+          "apgr": 0.8001742160278743
+        },
+        "domain": {
+          "examples": 4720,
+          "strong_quality": 0.6216101694915255,
+          "weak_quality": 0.3783898305084746,
+          "cpt_50": {
+            "strong_call_pct": 23.156779661016948,
+            "threshold": 0.6176820397377014,
+            "achieved_pgr": 0.5008710801393728,
+            "achieved_quality": 0.5002118644067797
+          },
+          "cpt_80": {
+            "strong_call_pct": 44.639830508474574,
+            "threshold": 0.520538866519928,
+            "achieved_pgr": 0.8005226480836234,
+            "achieved_quality": 0.573093220338983
+          },
+          "apgr": 0.8116724738675958
+        }
+      }
+    }
+  }
+}

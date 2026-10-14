@@ -1,0 +1,15 @@
+{
+  "data_path": "..\\..\\data\\original_gpt4_llama7b\\gpt4_llama7b_data_unbalanced\\router_train.parquet",
+  "query_embedding_dim": 1024,
+  "model_embedding_dim": 256,
+  "embedding_model_name": "BAAI/bge-large-en-v1.5",
+  "batch_size": 512,
+  "num_epochs": 10,
+  "learning_rate": 0.0003,
+  "weight_decay": 1e-05,
+  "early_stopping_patience": 3,
+  "val_split": 0.1,
+  "seed": 42,
+  "device": "cpu",
+  "timestamp": "2026-08-31T12:27:22.785181"
+}

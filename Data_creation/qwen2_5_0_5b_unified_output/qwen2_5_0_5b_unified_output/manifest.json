@@ -1,0 +1,650 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "replicas": 2,
+  "devices": [
+    "cuda:0",
+    "cuda:1"
+  ],
+  "input_dataset": "/kaggle/input/datasets/ashbornmonarch/unified-math-dataset/unified_math_dataset.jsonl",
+  "total_records": 4480,
+  "split_counts": {
+    "train": 4480
+  },
+  "batch_size_per_gpu": 16,
+  "effective_batch_size": 32,
+  "max_input_tokens": 1024,
+  "max_new_tokens": 512,
+  "embedding_definition": "For each prompt: mean-pooled non-padding token representation and final non-padding token representation at every hidden-state layer, including the input embedding output. Generated answer tokens are not included in embeddings.",
+  "shards": [
+    {
+      "file": "embeddings_00000.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00001.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00002.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00003.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00004.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00005.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00006.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00007.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00008.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00009.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00010.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00011.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00012.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00013.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00014.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00015.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00016.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00017.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00018.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00019.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00020.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00021.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00022.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00023.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00024.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00025.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00026.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00027.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00028.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00029.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00030.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00031.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00032.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00033.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00034.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00035.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00036.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00037.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00038.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00039.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00040.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00041.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00042.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00043.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00044.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00045.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00046.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00047.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00048.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00049.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00050.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00051.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00052.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00053.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00054.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00055.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00056.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00057.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00058.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00059.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00060.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00061.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00062.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00063.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00064.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00065.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00066.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00067.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00068.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    },
+    {
+      "file": "embeddings_00069.pt",
+      "count": 64,
+      "layer_embedding_shape": [
+        25,
+        896
+      ],
+      "dtype": "torch.float16"
+    }
+  ]
+}

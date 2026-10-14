@@ -216,7 +216,7 @@ def train(
             
             best_path = checkpoint_dir / 'best_model.pt'
             torch.save(checkpoint, best_path)
-            print(f"✓ Saved best model (val_loss: {val_loss:.4f})")
+            print(f"Saved best model (val_loss: {val_loss:.4f})")
         else:
             patience_counter += 1
             print(f"No improvement ({patience_counter}/{config['early_stopping_patience']})")
@@ -256,13 +256,16 @@ def main():
     # Data arguments
     parser.add_argument('--data_path', type=str, required=True,
                         help='Path to router training data (parquet file)')
+    parser.add_argument('--val_data_path', type=str, default=None,
+                        help='Optional validation parquet file. When provided, it is used '
+                             'instead of splitting the training data.')
     parser.add_argument('--checkpoint_dir', type=str, default='checkpoints',
                         help='Directory to save checkpoints')
     
     # Model arguments
     parser.add_argument('--query_embedding_dim', type=int, default=384,
                         help='Dimension of query embeddings (default: 384 for sentence-transformers)')
-    parser.add_argument('--model_embedding_dim', type=int, default=64,
+    parser.add_argument('--model_embedding_dim', type=int, default=256,
                         help='Dimension of model embeddings')
     parser.add_argument('--embedding_model', type=str, default='all-MiniLM-L6-v2',
                         help='Sentence transformer model name')
@@ -328,6 +331,7 @@ def main():
     print("\nPreparing data...")
     train_loader, val_loader, query_dim = create_dataloaders(
         train_path=args.data_path,
+        val_path=args.val_data_path,
         embedding_model_name=args.embedding_model,
         batch_size=args.batch_size,
         val_split=args.val_split,

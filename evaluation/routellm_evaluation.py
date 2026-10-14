@@ -27,11 +27,12 @@ import os
 import argparse
 from pathlib import Path
 
-# Add parent directory to path to import router module
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# The core modules live in router/baseline in this repository.
+BASELINE_DIR = Path(__file__).resolve().parents[1] / 'router' / 'baseline'
+sys.path.insert(0, str(BASELINE_DIR))
 
-from router.dataset import RouterDataset
-from router.model import MatrixFactorizationRouter
+from dataset import RouterDataset
+from model import MatrixFactorizationRouter
 
 
 # =============================================================================

@@ -26,8 +26,10 @@ from baseline.dataset               import RouterDataset
 # ── Paths ─────────────────────────────────────────────────────────────────────
 BASE = Path(__file__).parent.parent.parent.parent     # capstone/
 
-TEST_PARQUET  = BASE / "gpt4_llama7b_data_unbalanced/router_test.parquet"
-TEST_EMB      = BASE / "router/data/router_test_bge_large_embeddings.pt"
+DATA_DIR      = BASE / "data/original_gpt4_llama7b/gpt4_llama7b_data_unbalanced"
+TEST_PARQUET  = DATA_DIR / "router_test.parquet"
+# MPNet embeddings (4,987 x 768), matching the available train/validation vectors.
+TEST_EMB      = DATA_DIR / ".embedding_cache/router_test.parquet_mpnet_base_v2.pt"
 DOMAIN_CKPT   = BASE / "router/domain_specific/checkpoints_domain_mf/best_model.pt"
 BASELINE_CKPT = BASE / "router/baseline/checkpoints_bge_large_unbalanced/best_model.pt"
 

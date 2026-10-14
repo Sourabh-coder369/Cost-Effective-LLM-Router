@@ -1,0 +1,19 @@
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = [
+  "artifacts",
+  "data",
+  ".venv",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["router", "router_improved", "evaluation"]
+
+[tool.pytest.ini_options]
+testpaths = ["evaluation"]
+python_files = ["test_*.py"]

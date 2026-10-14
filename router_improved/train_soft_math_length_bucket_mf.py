@@ -1,0 +1,161 @@
+"""Train a separate soft-math MF router with a nonlinear prompt-length residual."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import torch
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import log_loss, roc_auc_score
+from torch import nn
+from torch.utils.data import DataLoader, TensorDataset
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "router"))
+from domain_specific.domain_dataset import DomainRouterDataset  # noqa: E402
+from train_soft_math_mf import SoftMathMF, apgr, metrics, set_seed  # noqa: E402
+
+
+class SoftMathLengthBucketMF(SoftMathMF):
+    """Soft Math MF plus a learned routing-logit residual for each length bucket."""
+
+    def __init__(self, *args, num_length_buckets: int, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.length_bias = nn.Embedding(num_length_buckets, 1)
+        nn.init.zeros_(self.length_bias.weight)
+
+    def forward_logits(
+        self,
+        query_embedding: torch.Tensor,
+        math_probability: torch.Tensor,
+        length_bucket: torch.Tensor,
+    ) -> torch.Tensor:  # type: ignore[override]
+        return super().forward_logits(query_embedding, math_probability) + self.length_bias(length_bucket)
+
+    def forward(
+        self,
+        query_embedding: torch.Tensor,
+        math_probability: torch.Tensor,
+        length_bucket: torch.Tensor,
+    ) -> torch.Tensor:  # type: ignore[override]
+        return torch.sigmoid(self.forward_logits(query_embedding, math_probability, length_bucket))
+
+
+def log_word_count(dataset: DomainRouterDataset) -> np.ndarray:
+    return np.log1p(dataset.df["prompt"].map(lambda value: len(str(value).split())).to_numpy(dtype=np.float32))
+
+
+def predict(
+    model: SoftMathLengthBucketMF,
+    features: np.ndarray,
+    gate: np.ndarray,
+    buckets: np.ndarray,
+    device: torch.device,
+) -> np.ndarray:
+    loader = DataLoader(
+        TensorDataset(torch.from_numpy(features), torch.from_numpy(gate.astype(np.float32)), torch.from_numpy(buckets.astype(np.int64))),
+        batch_size=512,
+    )
+    output = []
+    model.eval()
+    with torch.inference_mode():
+        for batch_x, batch_gate, batch_bucket in loader:
+            output.append(model(batch_x.to(device), batch_gate.to(device), batch_bucket.to(device)).squeeze(1).cpu().numpy())
+    return np.concatenate(output)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    for split in ("train", "val", "test"):
+        parser.add_argument(f"--{split}-data", required=True, type=Path)
+        parser.add_argument(f"--{split}-embeddings", required=True, type=Path)
+    parser.add_argument("--output-dir", type=Path, default=Path("artifacts/soft_math_length_bucket_mf"))
+    parser.add_argument("--num-buckets", type=int, default=5)
+    parser.add_argument("--epochs", type=int, default=25)
+    parser.add_argument("--patience", type=int, default=5)
+    parser.add_argument("--batch-size", type=int, default=512)
+    parser.add_argument("--learning-rate", type=float, default=3e-4)
+    parser.add_argument("--seed", type=int, default=42)
+    args = parser.parse_args()
+    set_seed(args.seed)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    datasets = {
+        name: DomainRouterDataset(str(getattr(args, f"{name}_data")), str(getattr(args, f"{name}_embeddings")))
+        for name in ("train", "val", "test")
+    }
+    x = {name: data.embeddings.numpy().astype(np.float32) for name, data in datasets.items()}
+    y = {name: data.df["binary_label"].to_numpy(dtype=np.int64) for name, data in datasets.items()}
+    math = {name: data.domain_ids.numpy().astype(np.int64) for name, data in datasets.items()}
+    log_length = {name: log_word_count(data) for name, data in datasets.items()}
+    edges = np.quantile(log_length["train"], np.linspace(0, 1, args.num_buckets + 1))
+    internal_edges = np.unique(edges[1:-1])
+    buckets = {name: np.digitize(values, internal_edges, right=True).astype(np.int64) for name, values in log_length.items()}
+    actual_buckets = int(len(internal_edges) + 1)
+
+    # Keep the original embedding-only math gate: this isolates the nonlinear
+    # length contribution to the routing decision itself.
+    detector = LogisticRegression(C=1.0, max_iter=500, solver="lbfgs", random_state=args.seed)
+    detector.fit(x["train"], math["train"])
+    gate = {name: detector.predict_proba(x[name])[:, 1].astype(np.float32) for name in x}
+    detector_metrics = {
+        "validation_math_log_loss": float(log_loss(math["val"], gate["val"])),
+        "validation_math_roc_auc": float(roc_auc_score(math["val"], gate["val"])),
+    }
+
+    model = SoftMathLengthBucketMF(query_embedding_dim=x["train"].shape[1], model_embedding_dim=64, num_models=2, num_domains=2, num_length_buckets=actual_buckets).to(device)
+    weight = torch.tensor([(len(y["train"]) - y["train"].sum()) / y["train"].sum()], device=device)
+    criterion = nn.BCEWithLogitsLoss(pos_weight=weight)
+    optimiser = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=1e-5)
+    loader = DataLoader(
+        TensorDataset(torch.from_numpy(x["train"]), torch.from_numpy(y["train"].astype(np.float32)), torch.from_numpy(gate["train"]), torch.from_numpy(buckets["train"])),
+        batch_size=args.batch_size,
+        shuffle=True,
+    )
+    best_apgr, best_state, best_epoch, stale, history = -float("inf"), None, 0, 0, []
+    for epoch in range(1, args.epochs + 1):
+        model.train()
+        loss_sum = 0.0
+        for batch_x, batch_y, batch_gate, batch_bucket in loader:
+            optimiser.zero_grad()
+            loss = criterion(model.forward_logits(batch_x.to(device), batch_gate.to(device), batch_bucket.to(device)).squeeze(1), batch_y.to(device))
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            optimiser.step()
+            loss_sum += loss.item() * len(batch_y)
+        val_apgr = apgr(predict(model, x["val"], gate["val"], buckets["val"], device), y["val"])
+        history.append({"epoch": epoch, "train_loss": loss_sum / len(y["train"]), "validation_apgr": val_apgr})
+        if val_apgr > best_apgr + 1e-6:
+            best_apgr, best_epoch, stale = val_apgr, epoch, 0
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+        else:
+            stale += 1
+            if stale >= args.patience:
+                break
+    assert best_state is not None
+    model.load_state_dict(best_state)
+    test_probs = predict(model, x["test"], gate["test"], buckets["test"], device)
+    result = {
+        "best_validation_apgr": best_apgr,
+        "best_epoch": best_epoch,
+        "length_feature": {
+            "definition": "learned residual for training-quantile log1p(word-count) buckets",
+            "edges_log1p_words": edges.tolist(),
+            "test_bucket_counts": np.bincount(buckets["test"], minlength=actual_buckets).tolist(),
+        },
+        "math_detector": detector_metrics,
+        "learned_length_bias": model.length_bias.weight.detach().cpu().squeeze(1).tolist(),
+        "history": history,
+        "test": metrics(test_probs, y["test"]),
+    }
+    torch.save({"model_state_dict": best_state, "detector": detector, "embedding_dim": x["train"].shape[1], "length_edges": edges}, args.output_dir / "best_model.pt")
+    (args.output_dir / "results.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(result, indent=2))
+
+
+if __name__ == "__main__":
+    main()

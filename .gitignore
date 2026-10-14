@@ -12,6 +12,8 @@ __pycache__/
 RouteLLM/
 
 # Large data files
+/data/
+/artifacts/
 *.parquet
 *.zip
 *.csv
@@ -26,6 +28,13 @@ router/data/
 # Model checkpoints
 router/checkpoints_*/
 *.pt
+
+# Generated experiment output
+*.log
+*.err.log
+wandb/
+.pytest_cache/
+.ruff_cache/
 
 # OS files
 Thumbs.db

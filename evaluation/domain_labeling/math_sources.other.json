@@ -1,0 +1,18 @@
+[
+  {
+    "name": "competition_math",
+    "path": "dim/competition_math",
+    "split": "train",
+    "question_field": "problem",
+    "answer_field": "solution",
+    "answer_kind": "boxed"
+  },
+  {
+    "name": "math500",
+    "path": "HuggingFaceH4/MATH-500",
+    "split": "test",
+    "question_field": "problem",
+    "answer_field": "answer",
+    "answer_kind": "scalar"
+  }
+]

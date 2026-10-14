@@ -1,0 +1,1 @@
+{"repos": [{"repoId": "convaiinnovations/laya", "repoType": "model", "commitHash": "55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851", "filePaths": ["encoder/config.json", "rl_agent_config.json", "tokenizer/tokenizer.json", "tokenizer/tokenizer_config.json", "model.safetensors"]}]}

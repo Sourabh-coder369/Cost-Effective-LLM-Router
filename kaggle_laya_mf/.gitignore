@@ -1,0 +1,3 @@
+# Keep the downloaded benchmark archive local; it is too large for Git.
+bench-release.tar.gz
+work/
