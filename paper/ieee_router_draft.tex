@@ -1,0 +1,182 @@
+% Compile in Overleaf with the IEEEtran conference template.
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{Domain-Aware Matrix-Factorization Routing for Cost-Effective Large Language Model Inference}
+
+\author{\IEEEauthorblockN{Sourabh S Mahindrakar, Chandan R, Sreephaneesha K, Sricharan D}
+\IEEEauthorblockA{Under the guidance of Dr. Ravi Gorripati\\
+PES University}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Routing each query to either a low-cost or high-capability large language model (LLM) can reduce inference cost while retaining quality. This paper studies a domain-aware matrix-factorization (MF) router that predicts whether GPT-4, the strong model, will outperform Llama-2-7B-Chat, the weak model, on an input query. The proposed router extends a shared MF baseline with separate learned capability vectors for general and mathematical queries. Both routers use fixed 1024-dimensional BGE-large query embeddings and 256-dimensional learned model vectors. On a held-out set of 4,987 pairwise-preference examples, the domain-aware router is especially effective for math: at a permitted 10-percentage-point quality drop, it saves 35.21\% of strong-model calls compared with 32.96\% for the baseline. Under the RouteLLM call-performance threshold (CPT) metric, it lowers math-only CPT80 from 73.41\% to 66.67\%. These results suggest that explicit domain-conditioned model representations can improve routing efficiency where model capability differences are domain dependent.
+\end{abstract}
+
+\begin{IEEEkeywords}
+large language models, routing, cost-efficient inference, matrix factorization, domain adaptation
+\end{IEEEkeywords}
+
+\section{Introduction}
+Using a powerful LLM for every prompt is expensive, while using a smaller model for every prompt can reduce output quality. An LLM router predicts which model should answer each query and selectively calls the strong model only when it is likely to provide a meaningful advantage. RouteLLM formalizes this setting and introduces preference-data-based routing together with cost--quality evaluation metrics~\cite{ong2024routellm}.
+
+Unlike response-selection systems that query several LLMs before choosing an answer, a pre-routing system must choose one model before any answer is generated. This one-call constraint is important because it avoids the extra inference cost and latency of multi-model cascades. RouteLLM frames this as a binary decision between a strong and a weak model, made using the predicted probability that the strong model will win~\cite{ong2024routellm}.
+
+Most routers use a single representation for each candidate model. This can obscure domain-specific behavior: a weak model may be sufficient for many general queries but require escalation more often for mathematical reasoning. We therefore compare a shared matrix-factorization router with a domain-aware variant that learns separate model vectors for general and math queries.
+
+Our contributions are:
+\begin{enumerate}
+    \item a domain-aware MF router with separate learned vectors for each \emph{model $\times$ domain} pair;
+    \item a controlled comparison against an equal-capacity, 256-dimensional shared MF baseline using BGE-large embeddings; and
+    \item quality--cost and RouteLLM-style CPT analyses for overall, math-only, and general-only test subsets.
+\end{enumerate}
+
+\section{Related Work}
+RouteLLM learns routers from pairwise preference data and evaluates the quality--cost curve obtained by changing a routing threshold~\cite{ong2024routellm}. It considers several routing architectures, including similarity-based ranking, matrix factorization, encoder classifiers, and causal-LLM classifiers. Its MF formulation is particularly relevant to this work because it estimates a latent score for each model--query pair and predicts the strong-model win probability from the score difference.
+
+The present work follows this preference-based, one-call routing formulation but investigates a different question: whether the latent representation of a model should depend on the query domain. Our domain-aware MF router retains a shared query encoder and scorer while allocating separate learned capability vectors to general and mathematical queries. This design is intended to reduce the averaging of heterogeneous model behavior into one vector per model.
+
+\section{Problem Formulation}
+For each query $q$, the router chooses between a weak model $M_w$ and a strong model $M_s$. The training data contain a binary pairwise label $y \in \{0,1\}$, where $y=1$ denotes that the strong-model response wins and $y=0$ denotes that the weak-model response wins. The models in this study are Llama-2-7B-Chat and GPT-4, respectively.
+
+Let $p(q)$ be the predicted probability that the strong model wins. At threshold $t$, the router selects the strong model when $p(q)\geq t$ and the weak model otherwise. Routed quality $Q(t)$ is the fraction of queries for which the selected model matches the preference label; strong-model usage is $C(t)=N^{-1}\sum_i\mathbb{1}[p(q_i)\geq t]$. We report avoided-call savings as $100(1-C(t))$. For each allowed quality drop, evaluation selects the threshold with the greatest savings while keeping $Q(t)$ within the allowed drop from the always-strong policy.
+
+\section{Method}
+\subsection{Shared Matrix-Factorization Baseline}
+Each query is embedded as $v_q \in \mathbb{R}^{1024}$ using BGE-large, then projected to 256 dimensions. For model $m$ and domain $d$, the router scores a model--query pair as
+\begin{equation}
+\delta(m,d,q)=w^T\left(\frac{v_{m,d}}{\lVert v_{m,d}\rVert_2}\odot f(v_q)\right),
+\end{equation}
+where $f$ is the shared query projection, $w$ is a learned classifier, and $\odot$ is element-wise multiplication. The shared baseline uses one model vector $v_m$ regardless of domain; the domain-aware router uses a separate vector $v_{m,d}$ for each model and domain. The probability that the strong model wins is $p(q)=\sigma(\delta(M_s,d,q)-\delta(M_w,d,q))$.
+
+\subsection{Domain-Aware Router}
+The domain-aware router learns four capability vectors: weak/general, weak/math, strong/general, and strong/math. The query projection and classifier are shared across domains.
+
+\section{Experimental Setup}
+The data contain pairwise responses and preference labels for GPT-4 and Llama-2-7B-Chat. The held-out test split has 4,987 examples: 267 math queries and 4,720 general queries. Query embeddings are precomputed with BGE-large and have 1,024 dimensions. Both compared models use 256-dimensional learned model vectors, making the capacity comparison fair.
+
+RouteLLM uses three-way preference outcomes (strong win, tie, or weak win) and evaluates on independent public benchmarks~\cite{ong2024routellm}. Our processed data use binary labels and the results in this paper are consequently pairwise-routing results for one strong/weak pair, rather than task-accuracy results across multiple external benchmarks. For each quality-drop value, we sweep router thresholds and retain the lowest-cost policy that satisfies the specified quality constraint. Thus, the thresholds in Tables~\ref{tab:math} and~\ref{tab:general} are analysis-time operating points. For a deployment study, the target threshold should instead be selected on a validation split and frozen before final test evaluation.
+
+\section{Evaluation Metrics}
+\label{sec:metrics}
+All metrics are computed separately on the overall test set and on each domain subset. Within a subset, $N$ is its number of queries, $y_i$ is its binary preference label, and $r_i(t)=\mathbb{1}[p(q_i)\geq t]$ is the strong-model routing decision. Each subset therefore has its own reference quality and selected threshold.
+
+\subsection{Routed Quality and Reference Policies}
+Routed quality $Q(t)$ is the fraction of queries for which the selected model matches the binary preference label. It is routing accuracy for this evaluation, not a measure of factual or mathematical correctness. The reference qualities $Q_s$ and $Q_w$ are the fractions of examples won by the strong and weak model, respectively; neither is necessarily perfect.
+
+\subsection{Allowed Quality Drop and Threshold Selection}
+For an allowed drop $D$ percentage points, the minimum acceptable quality is $Q_s-D/100$. We select the threshold with the lowest strong-model usage among thresholds meeting this quality target, using a 1,000-point grid. For example, when $Q_s=0.70$, a 10-pp allowance requires $Q(t)\geq0.60$. The achieved drop can be smaller than the allowance, and a zero allowance permits quality equal to or higher than $Q_s$.
+
+Thresholds are selected independently for each router and subset. Their numerical values need not be comparable across routers because the score scales can differ. Higher thresholds reduce strong-model usage, although empirical quality need not change monotonically. Because the current selection uses test labels, these results describe exploratory trade-off curves rather than performance at independently calibrated deployment thresholds.
+
+\subsection{Strong-Model Usage, Saving, and Gain}
+A saving of 35\% means that 35\% of queries are assigned to the weak model instead of calling the strong model for every query. It is an avoided-call percentage, not a measured reduction in monetary expenditure, since weak-model inference and routing also have costs. The reported gain is the domain router's saving minus the baseline's saving at their respective selected thresholds, measured in percentage points. Differences are calculated before rounding the table entries.
+
+\subsection{PGR, CPT, and APGR}
+Following RouteLLM~\cite{ong2024routellm}, performance gap recovered normalizes routed quality relative to the weak and strong reference policies:
+\begin{equation}
+\mathrm{PGR}(t)=\frac{Q(t)-Q_w}{Q_s-Q_w},\qquad Q_s>Q_w.
+\end{equation}
+PGR of zero matches the always-weak policy; PGR of one matches the always-strong policy. PGR of 0.8 recovers 80\% of their quality gap, which is different from obtaining 80\% absolute quality. Because routing may exploit complementary model strengths, empirical PGR can exceed one; the implementation does not clip it. Normalization is unsuitable when the reference gap is zero, and our evaluation requires a positive gap.
+
+For a target $x\in[0,100]$, call-performance threshold is
+\begin{equation}
+\mathrm{CPT}(x)=100\min_{t:\,\mathrm{PGR}(t)\geq x/100}C(t).
+\end{equation}
+Lower CPT is better: it requires fewer strong-model calls for the same normalized quality target. For example, CPT80 of 66.67\% means that approximately two-thirds of queries must be sent to the strong model to recover 80\% of its quality advantage. Unlike the quality-drop comparison's threshold grid, the CPT implementation sorts query scores and examines every top-$k$ strong-call allocation. Equal scores at a cutoff would require a tie-breaking rule to realize that exact allocation.
+
+Average performance gap recovered summarizes the call--performance curve:
+\begin{equation}
+\mathrm{APGR}=\int_0^1\mathrm{PGR}(c)\,dc
+\approx\frac{1}{10}\sum_{j=1}^{10}\mathrm{PGR}(c_j),
+\end{equation}
+where the implemented approximation uses $c_j=j/10$ and rounds each desired call count to the nearest integer. Higher APGR indicates greater average quality recovery across these budgets, but does not guarantee a better CPT at every target. These definitions use our preference-based quality signal; the values are not directly comparable with RouteLLM results measured on different model pairs and benchmark response scores.
+
+\subsection{Role of Classification Metrics}
+Accuracy, F1, and ROC-AUC can diagnose the win predictor, but do not by themselves specify the best quality--cost operating point. F1 balances precision and recall at one threshold; ROC-AUC measures how well scores rank strong-win queries above weak-win queries across thresholds. Neither metric accounts directly for model-call cost. Consequently, the primary criteria here are saving at a specified quality-drop allowance, CPT at a specified PGR target, and APGR across budgets. No additional F1 or ROC-AUC results are claimed in the tables below.
+
+\section{Results}
+\subsection{Quality--Cost Trade-off}
+Table~\ref{tab:math} shows that the domain-aware router improves savings for every displayed math operating point. At zero allowed quality drop, it saves 11.24\% of strong-model calls, compared with 6.74\% for the shared baseline. At a 10-pp allowed drop, it saves 35.21\%, a 2.25 percentage-point improvement.
+
+\begin{table*}[t]
+\caption{Math-only routing results (267 queries). Threshold means route to the strong model if $p(q)\geq t$.}
+\label{tab:math}
+\centering
+\begin{tabular}{rrrrrr}
+\toprule
+Drop (pp) & Baseline saving & Baseline $t$ & Domain saving & Domain $t$ & Gain (pp) \\
+\midrule
+0  & 6.74\%  & 0.390 & 11.24\% & 0.472 & +4.49 \\
+1  & 8.24\%  & 0.401 & 11.99\% & 0.476 & +3.75 \\
+2  & 9.36\%  & 0.410 & 15.36\% & 0.483 & +5.99 \\
+5  & 18.35\% & 0.457 & 22.10\% & 0.499 & +3.75 \\
+7  & 25.47\% & 0.492 & 30.71\% & 0.520 & +5.24 \\
+10 & 32.96\% & 0.513 & 35.21\% & 0.529 & +2.25 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+For general queries (Table~\ref{tab:general}), the domain-aware router improves savings at low quality-drop constraints, although gains become small or negative at some relaxed targets. This pattern indicates that the domain-specific representation is most beneficial where the two models exhibit materially different capability profiles.
+
+\begin{table*}[t]
+\caption{General-only routing results (4,720 queries).}
+\label{tab:general}
+\centering
+\begin{tabular}{rrrrrr}
+\toprule
+Drop (pp) & Baseline saving & Baseline $t$ & Domain saving & Domain $t$ & Gain (pp) \\
+\midrule
+0  & 33.07\% & 0.441 & 36.76\% & 0.457 & +3.69 \\
+1  & 39.34\% & 0.459 & 41.53\% & 0.473 & +2.18 \\
+2  & 43.43\% & 0.470 & 46.06\% & 0.487 & +2.63 \\
+5  & 56.27\% & 0.516 & 55.76\% & 0.523 & -0.51 \\
+7  & 61.78\% & 0.537 & 61.84\% & 0.545 & +0.06 \\
+10 & 70.72\% & 0.577 & 71.33\% & 0.591 & +0.61 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{RouteLLM-Style CPT Analysis}
+Table~\ref{tab:cpt} reports the metrics defined in Section~\ref{sec:metrics}. Lower CPT indicates fewer strong-model calls at the specified PGR target; higher APGR indicates greater average gap recovery across the evaluated call budgets.
+
+\begin{table}[t]
+\caption{RouteLLM-style CPT results for 256-dimensional routers. Lower CPT and higher APGR are better.}
+\label{tab:cpt}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Split / router & CPT50 & CPT80 & APGR \\
+\midrule
+Overall baseline & 23.96\% & \textbf{45.16\%} & 0.7905 \\
+Overall domain & \textbf{23.84\%} & 45.60\% & \textbf{0.8012} \\
+Math baseline & 34.83\% & 73.41\% & 0.6450 \\
+Math domain & 34.83\% & \textbf{66.67\%} & \textbf{0.6725} \\
+General baseline & 23.37\% & \textbf{43.79\%} & 0.8002 \\
+General domain & \textbf{23.16\%} & 44.64\% & \textbf{0.8117} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The largest improvement is math CPT80: the domain-aware router requires 66.67\% strong calls to recover 80\% of the weak-to-strong quality gap, while the baseline requires 73.41\%. This is a 6.74 percentage-point reduction in strong-model usage at the same normalized performance target.
+
+\section{Discussion and Limitations}
+The domain router consistently improves the math subset, but the overall gain is modest because the test set is predominantly general queries. The current quality signal is pairwise preference data, not direct task accuracy. Therefore, the CPT values are correctly computed under the RouteLLM definition but should not be numerically compared with CPT values reported for different model pairs or benchmarks in prior work. A stronger follow-up evaluation should generate answers from both models on independent benchmarks, compute task-level correctness or judge scores, and then assess the router without tuning its threshold on the test split.
+
+Future work should (i) select thresholds exclusively on validation data, (ii) evaluate on independent benchmarks with task-level correctness labels, (iii) test additional domains and model pairs, and (iv) report actual monetary cost using provider-specific token prices.
+
+\section{Conclusion}
+We presented a domain-aware MF router that represents each model separately in general and math domains. Using equal 256-dimensional model embeddings and BGE-large query features, the approach improves strong-model-call savings on math queries and reduces the RouteLLM-style CPT80 by 6.74 percentage points. Domain-aware routing is therefore a promising direction for reducing LLM inference cost without uniformly sacrificing quality.
+
+\begin{thebibliography}{1}
+\bibitem{ong2024routellm}
+I. Ong, A. Almahairi, V. Wu, W.-L. Chiang, T. Wu, J. E. Gonzalez, M. W. Kadous, and I. Stoica, \emph{RouteLLM: Learning to Route LLMs with Preference Data}, arXiv:2406.18665, 2024.
+\end{thebibliography}
+
+\end{document}
